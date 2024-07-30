@@ -8,8 +8,8 @@ Para lo anterior se utiliza el método POM (Page Object Model), lo cual incluye 
 
 **Tecnologías Utilizadas**
 
-Python
-Pytest
+Python,
+Pytest,
 Selenium 4.23.1
 
 **CONTENIDO:**
@@ -50,6 +50,6 @@ Todas las pruebas se ejecutaron de manera exitosa.
 
 **Documentación de Referencia**
 
-Tutorial de Python: Tutorial Oficial de Python
-XPATH Documentation: Guía de estilo para la sintaxis de XPATH. XPATH
+Tutorial de Python: Tutorial Oficial de Python,
+XPATH Documentation: Guía de estilo para la sintaxis de XPATH. XPATH,
 CSS Documentation: Guía de estilo para la sintaxis de CSS. CSS Selector
