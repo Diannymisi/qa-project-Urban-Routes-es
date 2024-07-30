@@ -8,7 +8,7 @@ Para lo anterior se utiliza el método POM (Page Object Model), lo cual incluye 
 
 **Tecnologías Utilizadas**
 
-Python
+Python,
 Pytest,
 Selenium 4.23.1
 
@@ -21,9 +21,9 @@ gitignore: archivos que deben ser ignorados en la creación del repositorio.
 
 **Se han automatizado las siguientes pruebas:**
 
-Rellenar campo desde y hasta con los valores proporcionados en el archivo data.py
-Hacer click en el botón "pedir taxi" para habilitar la aparición de la opción "tarifa confort"
-Seleccionar la Tarifa Comfort y validar la selección de la misma.
+1.Rellenar campo desde y hasta con los valores proporcionados en el archivo data.py
+2.Hacer click en el botón "pedir taxi" para habilitar la aparición de la opción "tarifa confort"
+3.Seleccionar la Tarifa Comfort y validar la selección de la misma.
 Hacer click en el campo número de teléfono
 Rellenar el campo número de teléfono con los valores proporcionados en el archivo data.py
 Hacer click en el botón "siguiente" para habilitar el campo "código sms"
