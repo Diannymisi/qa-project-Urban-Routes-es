@@ -62,17 +62,6 @@ class TestUrbanRoutes:
         assert routes_page.get_obtener_campo_codigo() == numeroCode
         assert routes_page.get_obtener_metodo_de_pago() == 'Tarjeta'
 
-#     def test_agregar_una_tarjeta_de_credito(self):
-        #         routes_page = UrbanRoutesPage(self.driver)
-        #         routes_page.set_clicks_metodo_pago_agregar_tarjeta()
-        #         numeroDeTarjeta = data.card_number
-        #         numeroCode = data.card_code
-        #         routes_page.set_rellenar_campos_tarjeta_y_codigo(numeroDeTarjeta, numeroCode)
-        #         assert routes_page.get_obtener_campo_tarjeta() == numeroDeTarjeta
-        #         assert routes_page.get_obtener_campo_codigo() == numeroCode
-        #         routes_page.set_clicks_perder_enfoque_agregar_tarjeta_cerrar_ventana()
-        #         assert routes_page.get_obtener_metodo_de_pago() == 'Tarjeta'
-
         def test_payment_method(self):
             routes_page = UrbanRoutesPage.UrbanRoutesPage(self.driver)
             card_number = data.card_number

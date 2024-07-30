@@ -35,7 +35,6 @@ Para lo anterior se utiliza el método POM (Page Object Model), lo cual incluye 
   12. rellenar campo código de tarjeta
   13. Hacer click para perder el enfoque y que se habilite el botón "agregar"
   14. Escribir un Mensaje para el Conductor de acuerdo a la información proporcionada en data.py. Confirmar que el campo
-ha sido rellenado
   15. Hacer click en el slider "manta y pañuelos" para activarlo
   16. Hacer dos veces click en el contador de "helado" pedir 2
   17. Click en el modal "pedir taxi"
@@ -53,3 +52,4 @@ Todas las pruebas se ejecutaron de manera exitosa.
 * Tutorial de Python: Tutorial Oficial de Python
 * XPATH Documentation: Guía de estilo para la sintaxis de XPATH. XPATH
 * CSS Documentation: Guía de estilo para la sintaxis de CSS. CSS Selector
+
