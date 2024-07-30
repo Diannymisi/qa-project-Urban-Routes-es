@@ -8,12 +8,12 @@ Para lo anterior se utiliza el método POM (Page Object Model), lo cual incluye 
 
 **Tecnologías Utilizadas**
 
-Python,
+Python
 Pytest,
 Selenium 4.23.1
 
 **CONTENIDO:**
-*data.py: contiene todos los datos necesarios para rellenar los campos de solicitudes y la URL necesaria.
+data.py: contiene todos los datos necesarios para rellenar los campos de solicitudes y la URL necesaria.
 main.py: Contiene las pruebas (9 en total)
 locators.py: contiene los métodos y localizadores necesarios para ejecutar las pruebas
 helpers.py: contiene el código proporcionado para ejecutar el código sms del número de teléfono cuando sea necesario. 
