@@ -10,18 +10,23 @@ class UrbanRoutesPage:
     from_field = (By.ID, 'from')
     to_field = (By.ID, 'to')
     boton_pedir_taxi = (By.CSS_SELECTOR, "button.button.round")
-    boton_tarifa_comfort = (By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[1]/div[5]/div[2]')
+    boton_tarifa_comfort = (By.XPATH, ".//div[@class='tcard-icon']//img[@alt='Comfort']") # Nuevo selector para mejorar las buenas prácticas
+    #(By.XPATH, '//*[@id="root"]/div/div[3]/div[3]/div[2]/div[1]/div[5]/div[2]')
+    selector_tcard_title = (By.CSS_SELECTOR, '.tcard-title')
     campo_numero_telefono = (By.CLASS_NAME, "np-text")
     agregar_numero_de_telefono = (By.ID, 'phone')
     boton_siguiente_numero_de_telefono = (By.CLASS_NAME, 'button.full')
     campo_ingresar_codigo = (By.ID, "code")
-    boton_confirmar_codigo = (By.XPATH, '//*[@id="root"]/div/div[1]/div[2]/div[2]/form/div[2]/button[1]')
+    boton_confirmar_codigo = (By.XPATH, ".//div[@class='modal']//button[text()='Confirmar']") # Nuevo selector para mejorar las buenas prácticas
+    #(By.XPATH, '//*[@id="root"]/div/div[1]/div[2]/div[2]/form/div[2]/button[1]')
     click_metodo_de_pago = (By.CSS_SELECTOR, '.pp-button.filled')
     click_agregar_tarjeta = (By.CSS_SELECTOR, 'div.pp-plus-container')
     campo_rellenar_tarjeta = (By.ID, 'number')
     rellenar_card_code = (By.XPATH, "//div[@class='card-code-input']//input[@id='code']")
-    click_para_perder_foco = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[2]')
-    boton_agregar_tarjeta = (By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')
+    click_para_perder_foco = (By.CSS_SELECTOR, "div.plc")  # Nuevo selector para mejorar las buenas prácticas
+    #(By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[2]')
+    boton_agregar_tarjeta = By.XPATH, "//button[@type='submit' and @class='button full' and text()='Agregar']" # Nuevo selector para mejorar las buenas prácticas
+    #(By.XPATH, '//*[@id="root"]/div/div[2]/div[2]/div[2]/form/div[3]/button[1]')
     boton_cerrar_ventana_emergente = (By.CSS_SELECTOR, '#root > div > div.payment-picker.open > div.modal > div.section.active > button')
     obtener_metodo_de_pago = (By.CLASS_NAME, "pp-value-text")
     campo_comentario = (By.ID, "comment")
@@ -58,10 +63,10 @@ class UrbanRoutesPage:
         ).get_property('value')
 
     def set_click_boton_pedir_un_taxi(self):
-        pedir = WebDriverWait(self.driver, 10).until(
+        orderTaxi = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.boton_pedir_taxi)
         )
-        pedir.click()
+        orderTaxi.click()
 
     def set_click_boton_tarifa_comfort(self):
         clickComfort = WebDriverWait(self.driver, 10).until(
@@ -70,40 +75,41 @@ class UrbanRoutesPage:
         clickComfort.click()
 
     def get_boton_comfort(self):
-        textoTarifaComfort = WebDriverWait(self.driver, 10).until(
-            EC.presence_of_element_located(self.boton_tarifa_comfort)
-        ).text
-        return textoTarifaComfort
+        container = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '.tcard.active'))        # Cambios en base a correcciones
+        )
+        textComfortRate = container.find_element(*self.selector_tcard_title).text
+        return textComfortRate
 
     def set_boton_numero_telefono(self):
-        clickNumeroDeTelefono = WebDriverWait(self.driver, 10).until(
+        clickPhoneNumber = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.campo_numero_telefono)
         )
-        clickNumeroDeTelefono.click()
+        clickPhoneNumber.click()
 
     def set_ingresar_numero_de_telefono(self, numero):
-        agregarNumero = WebDriverWait(self.driver, 10).until(
+        addNumber = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.agregar_numero_de_telefono)
         )
-        agregarNumero.send_keys(numero)
+        addNumber.send_keys(numero)
 
     def set_click_boton_siguiente_numero_telefono(self):
-        siguiente = WebDriverWait(self.driver, 10).until(
+        next = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.boton_siguiente_numero_de_telefono)
         )
-        siguiente.click()
+        next.click()
 
     def set_ingresar_codigo(self, codigo):
-        ingresarCodigo = WebDriverWait(self.driver, 10).until(
+        enterCode = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.campo_ingresar_codigo)
         )
-        ingresarCodigo.send_keys(codigo)
+        enterCode.send_keys(codigo)
 
     def set_confirmar_codigo(self):
-        confirmar = WebDriverWait(self.driver, 10).until(
+        check = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(self.boton_confirmar_codigo)
         )
-        confirmar.click()
+        check.click()
 
     def get_numero_telefono(self):
         numero = WebDriverWait(self.driver, 10).until(
@@ -121,11 +127,10 @@ class UrbanRoutesPage:
         self.set_confirmar_codigo()
 
     def set_click_metodo_pago(self):
-        tarjetaCredito = WebDriverWait(self.driver, 20).until(
+        creditCard = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.click_metodo_de_pago)
         )
-        tarjetaCredito.click()
-
+        creditCard.click()
 
     def set_click_agregar_tarjeta_por_favor(self):
         WebDriverWait(self.driver, 20).until(
@@ -133,62 +138,60 @@ class UrbanRoutesPage:
         ).click()
 
     def set_click_agregar_tarjeta(self):
-        botonAgregar = WebDriverWait(self.driver, 20).until(
+        addButton = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.click_agregar_tarjeta)
         )
-        botonAgregar.click()
-
-    #  click_agregar_tarjeta = (By.CSS_SELECTOR, 'div.pp-plus-container')
+        addButton.click()
 
     def set_clicks_metodo_pago_agregar_tarjeta(self):
         self.set_click_metodo_pago()
         self.set_click_agregar_tarjeta_por_favor()
 
     def set_rellenar_campo_tarjeta(self, numeroDeTarjeta):
-        ingresarTarjeta = WebDriverWait(self.driver, 20).until(
+        addCard = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.campo_rellenar_tarjeta)
         )
-        ingresarTarjeta.send_keys(numeroDeTarjeta)
+        addCard.send_keys(numeroDeTarjeta)
 
     def set_rellenar_campo_codigo(self, numeroCode):
-        ingresarCodigo = WebDriverWait(self.driver, 20).until(
+        enterCode = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.rellenar_card_code)
         )
-        ingresarCodigo.send_keys(numeroCode)
+        enterCode.send_keys(numeroCode)
 
     def set_rellenar_campos_tarjeta_y_codigo(self, numeroDeTarjeta, numeroCode):
         self.set_rellenar_campo_tarjeta(numeroDeTarjeta)
         self.set_rellenar_campo_codigo(numeroCode)
 
     def get_obtener_campo_tarjeta(self):
-        ingresarTarjeta = WebDriverWait(self.driver, 20).until(
+        enterCard = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.campo_rellenar_tarjeta)
         )
-        return ingresarTarjeta.get_property('value')
+        return enterCard.get_property('value')
 
     def get_obtener_campo_codigo(self):
-        ingresarCodigo = WebDriverWait(self.driver, 20).until(
+        enterCode = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.rellenar_card_code)
         )
-        return ingresarCodigo.get_property('value')
+        return enterCode.get_property('value')
 
     def set_click_para_perder_el_enfoque(self):
-        clickOtroLado = WebDriverWait(self.driver, 20).until(
+        clickOterSide = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.click_para_perder_foco)
         )
-        clickOtroLado.click()
+        clickOterSide.click()
 
     def set_click_boton_agregar_tarjeta(self):
-        clickAgregar = WebDriverWait(self.driver, 20).until(
+        clickAdd = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.boton_agregar_tarjeta)
         )
-        clickAgregar.click()
+        clickAdd.click()
 
     def set_click_cerrar_ventana_emergente(self):
-        cerrarVentana = WebDriverWait(self.driver, 20).until(
+        closeWindow = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.boton_cerrar_ventana_emergente)
         )
-        cerrarVentana.click()
+        closeWindow.click()
 
     def set_clicks_perder_enfoque_agregar_tarjeta_cerrar_ventana(self):
         self.driver.implicitly_wait(3)
@@ -197,22 +200,22 @@ class UrbanRoutesPage:
         self.set_click_cerrar_ventana_emergente()
 
     def get_obtener_metodo_de_pago(self):
-        comprobarTexto = WebDriverWait(self.driver, 20).until(
+        checkText = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.obtener_metodo_de_pago)
         )
-        return comprobarTexto.text
+        return checkText.text
 
     def set_agregar_comentario(self, message_for_driver):
-        agregarComentario = WebDriverWait(self.driver, 20).until(
+        addComment = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.campo_comentario)
         )
-        agregarComentario.send_keys(message_for_driver)
+        addComment.send_keys(message_for_driver)
 
     def get_comprobar_comentario(self):
-        comprobarComentario = WebDriverWait(self.driver, 20).until(
+        checkComment = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.campo_comentario)
         )
-        return comprobarComentario.get_attribute('value')
+        return checkComment.get_attribute('value')
 
     def set_click_manta_y_pañuelos(self):
         clickSlider = WebDriverWait(self.driver, 20).until(
@@ -221,37 +224,37 @@ class UrbanRoutesPage:
         clickSlider.click()
 
     def get_saber_si_slider_esta_seleccionado(self):
-        apretar = WebDriverWait(self.driver, 20).until(
+        press = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(
                 (By.XPATH, "//div[@class='r-sw-container']/*[contains(text(),'Manta')]/..//div[@class='switch']//input[@class='switch-input']")
             )
         )
-        return apretar.is_selected()
+        return press.is_selected()  # Cambio a métodos y variables que coinciden en Inglés antes "apretar"
 
     def set_agregar_helado(self):
-        doshelados = WebDriverWait(self.driver, 20).until(
+        two_ice_creams = WebDriverWait(self.driver, 20).until(  # Variable en inglés
             EC.presence_of_element_located(self.boton_agregar_helado)
         )
-        doshelados.click()
-        doshelados.click()
+        two_ice_creams.click()
+        two_ice_creams.click()  # Cambio a métodos y variables que coinciden en Inglés antes "dosHelados"
 
-    def get_cantidad_de_helados(self):
-        helado = WebDriverWait(self.driver, 20).until(
+    def get_cantidad_de_helados (self):
+        ice_cream = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.obtener_cantidad_de_helados)
         )
-        return helado.text
+        return ice_cream.text
 
     def set_click_pedir_taxi(self):
-        pedir = WebDriverWait(self.driver, 20).until(
+        order = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.pedir_taxi)
         )
-        pedir.click()
+        order.click()
 
     def get_comprobar_ventana_emergente_si(self):
-        emergente = WebDriverWait(self.driver, 20).until(
+        pop_up_window = WebDriverWait(self.driver, 20).until(
             EC.presence_of_element_located(self.titulo_ventana_emergente)
         )
-        return emergente.text
+        return pop_up_window.text
 
     def set_tiempo(self):
         WebDriverWait(self.driver, 40).until(
@@ -259,10 +262,10 @@ class UrbanRoutesPage:
         )
 
     def get_comprobar_informacion_de_conductor(self):
-        otro = WebDriverWait(self.driver, 60).until(
+        other = WebDriverWait(self.driver, 60).until(
             EC.presence_of_element_located(self.titulo_ventana_emergente)
         )
-        return otro.text
+        return other.text
 
 
 

@@ -33,9 +33,10 @@ class TestUrbanRoutes:
 # sea el esperado después de seleccionar la opción correspondiente
     def test_texto_tarifa_comfort(self):
         routes_page = UrbanRoutesPage(self.driver)
-        routes_page.set_click_boton_pedir_un_taxi()
+        routes_page.set_click_boton_pedir_un_taxi()               #Prueba mejorada en base a correcciones
         routes_page.set_click_boton_tarifa_comfort()
-        assert 'Comfort' == routes_page.get_boton_comfort()
+        texto_tarifa = routes_page.get_boton_comfort()
+        assert texto_tarifa == 'Comfort', f"Expected 'Comfort', but got '{texto_tarifa}'"
 
     # Verifica agregar número de teléfono y el código de verificación.
     def test_agregar_numero_de_telefono(self):
@@ -61,22 +62,6 @@ class TestUrbanRoutes:
         assert routes_page.get_obtener_campo_tarjeta() == numeroDeTarjeta
         assert routes_page.get_obtener_campo_codigo() == numeroCode
         assert routes_page.get_obtener_metodo_de_pago() == 'Tarjeta'
-
-        def test_payment_method(self):
-            routes_page = UrbanRoutesPage.UrbanRoutesPage(self.driver)
-            card_number = data.card_number
-            card_code = data.card_code
-
-            routes_page.click_payment_method()
-            routes_page.click_add_card()
-            routes_page.add_card_number(card_number)
-            routes_page.add_card_code(card_code)
-
-            routes_page.click_outside_card_fields()
-            routes_page.click_add_card_button()
-            routes_page.click_close_payment_method()
-
-            assert routes_page.get_payment_method_selected() == 'Tarjeta'
 
 # Verifica que el comentario para el conductor se agregue correctamente
     def test_agregar_comentario_al_conductor(self):
